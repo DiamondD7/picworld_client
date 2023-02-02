@@ -15,8 +15,12 @@ const Message = () => {
           </button>
           <button className="btn-chats">
             <div className="btn-within">
-              <img className="chats-img" src={AJS} alt="chatpic" />
-              <p>Aaron Sierra</p>
+              <img
+                className="chats-img"
+                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                alt="chatpic"
+              />
+              <p>Jarret Iyanna</p>
             </div>
           </button>
         </div>

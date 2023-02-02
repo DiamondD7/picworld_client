@@ -17,12 +17,13 @@
 }
 
 .btn-chats:hover{
-    background-color: rgba(244,244,244,0.9 );
+    background-color: rgba(219, 219, 219, 0.418);
     transition: all 0.3s ease-in;
 }
 
 .chats-img{
     width: 30px;
+    height: 30px;
     object-fit: cover;
     border-radius: 50%;
     

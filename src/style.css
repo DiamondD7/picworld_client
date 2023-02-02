@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
+
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+    color: #202020;
+}
+
+/* body{
+    overflow: hidden;
+} */
+
+.main-container{
+    display: flex;
+}
+
+.nav-container{
+    display: inline-block;
+    height: 100vh;
+    /* position: fixed; */
+    /* border-right: 1px solid rgba(0,0,0,0.4); */
+   /* background-color: red; */
+}
+
+.content-container{
+
+    width: 100vw;
+    height: 95vh;
+    overflow-y: auto;
+}

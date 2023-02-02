@@ -1,0 +1,73 @@
+.message-container{
+    display: flex;
+}
+
+.chatboxes-div{
+    margin:30px 0 0 50px;
+}
+
+.btn-chats{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0 10px 0 10px;
+    transition: all 0.3s ease-in;
+    margin-top: 10px;
+    display: block;
+}
+
+.btn-chats:hover{
+    background-color: rgba(244,244,244,0.9 );
+    transition: all 0.3s ease-in;
+}
+
+.chats-img{
+    width: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    
+}
+
+.btn-within{
+    display: flex;
+    align-items: center;
+}
+
+.btn-within p {
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+
+.chat-container{
+    margin-left: 100px;
+    width: 1400px;
+    height: 900px;
+    background-color: rgba(221, 221, 221, 0.342);
+}
+
+.message-functions{
+    display: flex;
+    align-items: center;
+}
+
+.message-functions button{
+    margin-left: 14px;
+    padding: 0 20px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.textarea-message{
+    margin-left: 277.5px;
+
+    max-width: 1300px;
+    min-width: 1300px;
+
+    max-height: 50px;
+    min-height: 50px;
+}

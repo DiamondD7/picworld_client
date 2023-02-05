@@ -13,8 +13,8 @@ const Signup = (props) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
-  const [imageLink, setImageLink] = useState("");
-  const [imageDescription, setImageDescription] = useState("");
+  const [imageLink, setImageLink] = useState("default");
+  const [imageDescription, setImageDescription] = useState("default");
   const [liked, setLiked] = useState(0);
 
   const [user, setUser] = useState("");
@@ -58,6 +58,7 @@ const Signup = (props) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
+    const profilePic = "";
 
     if (!v1 || !v2) {
       setErrMsg("Invalid Entry");
@@ -77,6 +78,7 @@ const Signup = (props) => {
         Password: pwd,
         UserName: user,
         Bio: bio,
+        ProfilePicture: profilePic,
         Posts: [
           {
             Liked: liked,
@@ -97,7 +99,7 @@ const Signup = (props) => {
   return (
     <div>
       {signinClicked ? (
-        <SignIn auth={props.auth} />
+        <SignIn auth={props.auth} loggedUser={props.loggedUser} />
       ) : (
         <div className="signup-wrapper__div">
           {success ? (
@@ -275,7 +277,7 @@ const Signup = (props) => {
   );
 };
 
-const SignIn = () => {
+const SignIn = (props) => {
   const [usersUName, setUsersUName] = useState("");
   const [usersPassword, setUsersPassword] = useState("");
 
@@ -288,10 +290,15 @@ const SignIn = () => {
         Accept: "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status >= 400) {
+          throw new Error("Users not found");
+        }
+        return res.json();
+      })
       .then((data) => {
-        console.log(data);
-        console.log("success");
+        props.loggedUser(data);
+        props.auth(true);
       });
   };
   return (

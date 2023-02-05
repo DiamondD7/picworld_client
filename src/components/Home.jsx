@@ -1,7 +1,7 @@
 import React from "react";
 import ContentContainer from "./Content/ContentContainer";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div>
       <div className="main-container">

@@ -9,6 +9,7 @@ import Signup from './components/Signup/Signup';
 
 const App = () => {
     const [authorized, setAuthorized] = useState(false);
+    const [loggedUser, setLoggedUser] = useState([]);
     return(
         <>
             {authorized ? 
@@ -17,12 +18,12 @@ const App = () => {
                     <Nav />
                 </nav>     
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/message" element={<Message />} />
+                    <Route path="/" element={<Home loggedUser={loggedUser}/>} />
+                    <Route path="/profile" element={<Profile loggedUser={loggedUser}/>} />
+                    <Route path="/message" element={<Message loggedUser={loggedUser}/>} />
                 </Routes>
             </div>
-            : <Signup auth={setAuthorized}/>}
+            : <Signup auth={setAuthorized} loggedUser={setLoggedUser}/>}
         </>
     );
 };

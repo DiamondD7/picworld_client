@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { GETA_USER, PUT_USER } from "../../Auth";
 
 import "../../styles/profilestyles.css";
-const Profile = () => {
+const Profile = (props) => {
   const [item, setItem] = useState([]);
+  const [getupdatePic, setGetUpdatePic] = useState("");
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     fetch("https://localhost:7230/api/Posts/")
@@ -12,18 +15,64 @@ const Profile = () => {
         setItem(data);
       });
   }, []);
+
+  const onChangeImageUpload = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      fetch(PUT_USER + `/${props.loggedUser.userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          UserId: props.loggedUser.userId,
+          FirstName: props.loggedUser.firstName,
+          LastName: props.loggedUser.lastName,
+          Email: props.loggedUser.email,
+          Password: props.loggedUser.password,
+          UserName: props.loggedUser.userName,
+          Bio: props.loggedUser.bio,
+          profilePicture: URL.createObjectURL(e.target.files[0]),
+          posts: [
+            {
+              liked: 0,
+              imageLink: "",
+              imageDescription: "",
+            },
+          ],
+        }),
+      })
+        .then((res) => res)
+        .then(() => {
+          setIsChanged(true);
+        });
+    }
+  };
+
+  useEffect(() => {
+    fetch(GETA_USER + `/${props.loggedUser.userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setGetUpdatePic(data.profilePicture);
+        setIsChanged(false);
+      });
+  }, [isChanged]);
+
   return (
     <div>
       <div className="profilepicture-div">
         <div>
-          <img
-            className="profilepicture"
-            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-            alt="profilepic"
-          />
+          <img className="profilepicture" src={getupdatePic} alt="profilepic" />
         </div>
         <div className="addIcon-div">
-          <button>
+          <label className="labelInput">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -38,7 +87,13 @@ const Profile = () => {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-          </button>
+            <input
+              type="file"
+              className="inputFile"
+              accept="image/png, image/jpeg"
+              onChange={onChangeImageUpload}
+            />
+          </label>
         </div>
       </div>
       <p className="profile-description">
@@ -103,9 +158,9 @@ const Profile = () => {
         </div>
       </div>
       {item.map((i) =>
-        i.userId === 6 ? (
-          <div>
-            <p>{i.imageLink}</p>
+        i.userId === props.loggedUser.userId ? (
+          <div key={i.postId}>
+            <p>{i.imageLink === "default" ? "" : i.imageLink}</p>
           </div>
         ) : (
           ""

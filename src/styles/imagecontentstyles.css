@@ -3,6 +3,12 @@
     grid-template-columns: repeat(5,350px);
 }
 
+
+.description-text{
+    background-color: red;
+
+}
+
 .author{
     display: flex;
 }

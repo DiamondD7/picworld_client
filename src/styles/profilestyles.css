@@ -35,8 +35,7 @@ input[type="file"]{
     cursor: pointer;
 }
 
-
-.profile-description{
+.profile-description__text{
     /* background-color: blue; */
     width: 500px;
     font-size: 11px;
@@ -46,6 +45,17 @@ input[type="file"]{
     text-align: center;
 }
 
+.profile-description__addpost{
+    font-size: 15px;
+    display: flex;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-description__addpost::before{
+    content: '+';
+}
 
 .profile-post-container{
     display: grid;
@@ -73,5 +83,9 @@ input[type="file"]{
 
 .icons-div{
     margin-bottom: 20px;
+}
+
+.addpicture-icon{
+    width: 19px;
 }
 

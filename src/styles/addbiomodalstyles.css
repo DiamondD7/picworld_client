@@ -1,0 +1,42 @@
+.bio-modal__wrapper{
+    width: 800px;
+    height: 300px;
+
+    position: absolute;
+    top:20%;
+    left:50%;
+    transform: translate(-50%);
+    z-index: 2;
+}
+
+.bio-modal__textarea{
+    min-width: 100%;
+    max-width: 100%;
+
+    min-height: 200px;
+    max-height: 200px;
+
+    padding: 5px;
+}
+
+.bio-modal__button__wrapper{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.bio-modal__button__wrapper button{
+    padding: 0 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+  }

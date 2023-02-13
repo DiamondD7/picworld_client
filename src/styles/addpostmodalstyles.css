@@ -76,3 +76,20 @@
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
   }
+
+  .modal-cancel{
+    padding: 0 20px;
+    font-size: 15px;
+    /* margin-top: 6%; */
+    display: block;
+    margin: 6% auto;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .modal-cancel:hover{
+    transition: all 0.3s ease-in-out;
+    background-color: rgba(0,0,0,0.1);
+  }

@@ -298,7 +298,8 @@ const SignIn = (props) => {
       })
       .then((data) => {
         props.loggedUser(data);
-        props.auth(true);
+
+        props.auth(true, data);
       });
   };
   return (

@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { GETA_USER, PUT_USER } from "../../Auth";
+import { GETA_USER, PUT_USER, GET_ALL } from "../../Auth";
 
 import "../../styles/profilestyles.css";
+import AddBioModal from "./AddBioModal";
 import AddPostModal from "./AddPostModal";
 const Profile = (props) => {
   const [item, setItem] = useState([]);
+  const [storedUser, setStoredUser] = useState([]);
   const [getupdatePic, setGetUpdatePic] = useState("");
   const [isChanged, setIsChanged] = useState(false);
+  const [openBioModal, setOpenBioModal] = useState(false);
 
   const [imgSrc, setImgSrc] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    const storedData = localStorage.getItem("data");
+
+    if (storedData) {
+      setStoredUser(JSON.parse(storedData));
+    }
+  }, []);
+
+  useEffect(() => {
     fetch("https://localhost:7230/api/Posts/")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setItem(data);
       });
   }, []);
@@ -23,20 +33,20 @@ const Profile = (props) => {
   const onChangeImageUpload = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      fetch(PUT_USER + `/${props.loggedUser.userId}`, {
+      fetch(PUT_USER + `/${storedUser.userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          UserId: props.loggedUser.userId,
-          FirstName: props.loggedUser.firstName,
-          LastName: props.loggedUser.lastName,
-          Email: props.loggedUser.email,
-          Password: props.loggedUser.password,
-          UserName: props.loggedUser.userName,
-          Bio: props.loggedUser.bio,
+          UserId: storedUser.userId,
+          FirstName: storedUser.firstName,
+          LastName: storedUser.lastName,
+          Email: storedUser.email,
+          Password: storedUser.password,
+          UserName: storedUser.userName,
+          Bio: storedUser.bio,
           profilePicture: URL.createObjectURL(e.target.files[0]),
           posts: [
             {
@@ -55,7 +65,7 @@ const Profile = (props) => {
   };
 
   useEffect(() => {
-    fetch(GETA_USER + `/${props.loggedUser.userId}`, {
+    fetch(GETA_USER + `/${storedUser.userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +77,15 @@ const Profile = (props) => {
         setGetUpdatePic(data.profilePicture);
         setIsChanged(false);
       });
-  }, [isChanged]);
+  }, [isChanged, storedUser]);
+
+  const bio = () => {
+    setOpenBioModal(true);
+  };
+
+  const updateData = (data) => {
+    localStorage.setItem("data", data);
+  };
 
   return (
     <div>
@@ -101,9 +119,8 @@ const Profile = (props) => {
         </div>
       </div>
       <div className="profile-description">
-        <p className="profile-description__text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-          quidem voluptas asperiores maxime perspiciatis sit
+        <p className="profile-description__text" onClick={bio}>
+          {storedUser.bio}
         </p>
         <button
           className="profile-description__addpost"
@@ -128,10 +145,10 @@ const Profile = (props) => {
 
       <div className="profile-post-container">
         {item.map((i) =>
-          i.userId === props.loggedUser.userId ? (
+          i.userId === storedUser.userId ? (
             <div key={i.postId}>
               <img src={i.imageLink} alt="post" className="image-post" />
-
+              <p className="profile-post__description">{i.imageDescription}</p>
               <div className="icons-div">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +208,19 @@ const Profile = (props) => {
             imgSrc={setImgSrc}
             setopenModal={setOpenModal}
             openModal={openModal}
-            userId={props.loggedUser.userId}
+            userId={storedUser.userId}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+
+      {openBioModal === true ? (
+        <div>
+          <AddBioModal
+            updateData={updateData}
+            setOpenBio={setOpenBioModal}
+            loggedUser={storedUser}
           />
         </div>
       ) : (

@@ -4,6 +4,10 @@ import Logo from "../../images/Pic_logo.png";
 import "../../styles/nav-styles.css";
 
 const Nav = () => {
+  const userLogout = () => {
+    localStorage.setItem("authorized", "false");
+    window.location.reload();
+  };
   return (
     <div>
       <div>
@@ -26,6 +30,9 @@ const Nav = () => {
           </Link>
         </li>
         <li>Friends</li>
+        <li>
+          <button onClick={userLogout}>Logout</button>
+        </li>
         <li>
           <svg
             xmlns="http://www.w3.org/2000/svg"

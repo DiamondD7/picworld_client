@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactCrop from "react-image-crop";
 
 import "react-image-crop/dist/ReactCrop.css";
 import "../../styles/addpostmodalstyles.css";
@@ -34,10 +33,14 @@ const AddPostModal = (props) => {
         liked: 0,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => console.log(res))
       .then(() => {
         console.log("success");
       });
+  };
+
+  const btnCancel = () => {
+    props.setopenModal(false);
   };
 
   return (
@@ -68,6 +71,9 @@ const AddPostModal = (props) => {
                   onChange={handleImageChange}
                 />
               </label>
+              <button className="modal-cancel" onClick={btnCancel}>
+                Cancel
+              </button>
             </div>
           ) : (
             <div>
